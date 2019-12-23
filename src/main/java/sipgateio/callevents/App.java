@@ -1,4 +1,4 @@
-package sipgateio.callevents.java;
+package sipgateio.callevents;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
