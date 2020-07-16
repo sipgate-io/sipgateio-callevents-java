@@ -72,25 +72,23 @@ You can configure webhooks for sipgate.io as follows:
 3. Click the gear icon of the **Incoming** or **Outgoing** entry
 4. Fill in your webhook URL and click save. In this example we receive _newCall_ events on the route `/new-call`.\
   **Note:** your webhook URL has to be accessible from the internet. (See the section [Making your computer accessible from the internet](#making-your-computer-accessible-from-the-internet))\
-  **Example:** Assuming your server's address was `example.serveo.net`, the address you'd need to set in the webhook console would be `https://example.serveo.net/new-call`.
+  **Example:** Assuming your server's address was `example.localhost.run`, the address you'd need to set in the webhook console would be `https://example.localhost.run/new-call`.
 5. In the **sources** section you can select what phonelines and groups should trigger webhooks.
-
 
 ## A word on security
 Although sipgate.io can work with both HTTP and HTTPS connections, it is strongly discouraged to use plain HTTP as the webhooks contain sensitive information.
-_Serveo_'s service also supports HTTPS, so for development you will be fine using that.
+The service `localhost.run` also supports HTTPS, so for development you will be fine using that.
 For production, it is important to note that sipgate.io does not accept self-signed SSL certificates.
 If you need a certificate for your server, you can easily get one at _Let´s Encrypt_.
 
 ## Making your computer accessible from the internet
 There are many possibilities to obtain an externally accessible address for your computer.
-In this example we use the service [serveo.net](serveo.net) which sets up a reverse ssh tunnel that forwards traffic from a public URL to your localhost.
-The following command creates the specified subdomain at serveo.net and sets up a tunnel between the public port 80 on their server and your localhost:8080:
+In this example we use the service [localhost.run](localhost.run) which sets up a reverse ssh tunnel that forwards traffic from a public URL to your localhost.
+The following command creates a subdomain at localhost.run and sets up a tunnel between the public port 80 on their server and your localhost:8080:
 
 ```bash
-$ ssh -R [subdomain].serveo.net:80:localhost:8080 serveo.net
+$ ssh -R 80:localhost:8080 ssh.localhost.run
 ```
-
 If you run this example on a server which can already be reached from the internet, you do not need the forwarding.
 In that case, the webhook URL needs to be adjusted accordingly.
 
