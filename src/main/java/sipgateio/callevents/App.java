@@ -40,7 +40,7 @@ public class App {
 		Map<String, String> requestData = parseRequestBody(httpExchange);
 
 		String caller = requestData.getOrDefault("from", "[unknown]");
-		String calleeName = requestData.getOrDefault("user", "[unknown]");
+		String calleeName = requestData.getOrDefault("to", "[unknown]");
 
 		System.out.println(String.format("%s answered call from %s", calleeName, caller));
 
