@@ -64,6 +64,17 @@ You can find more information about the XML response here:
 https://developer.sipgate.io/push-api/api-reference/#the-xml-response
 
 
+## Making your computer accessible from the internet
+There are many possibilities to obtain an externally accessible address for your computer.
+In this example we use the service [localhost.run](localhost.run) which sets up a reverse ssh tunnel that forwards traffic from a public URL to your localhost.
+The following command creates a subdomain at localhost.run and sets up a tunnel between the public port 80 on their server and your localhost:8080:
+
+```bash
+$ ssh -R 80:localhost:8080 ssh.localhost.run
+```
+If you run this example on a server which can already be reached from the internet, you do not need the forwarding.
+In that case, the webhook URL needs to be adjusted accordingly.
+
 ## Configure webhooks for sipgate.io 
 You can configure webhooks for sipgate.io as follows:
 
@@ -81,17 +92,9 @@ The service `localhost.run` also supports HTTPS, so for development you will be 
 For production, it is important to note that sipgate.io does not accept self-signed SSL certificates.
 If you need a certificate for your server, you can easily get one at _Let´s Encrypt_.
 
-## Making your computer accessible from the internet
-There are many possibilities to obtain an externally accessible address for your computer.
-In this example we use the service [localhost.run](localhost.run) which sets up a reverse ssh tunnel that forwards traffic from a public URL to your localhost.
-The following command creates a subdomain at localhost.run and sets up a tunnel between the public port 80 on their server and your localhost:8080:
-
-```bash
-$ ssh -R 80:localhost:8080 ssh.localhost.run
-```
-If you run this example on a server which can already be reached from the internet, you do not need the forwarding.
-In that case, the webhook URL needs to be adjusted accordingly.
-
+## Configuration 
+Create the `.env` by copying the [`.env.example`](.env.example) and set the values according to the comment above each variable.
+`WEBHOOK_URL` is the URL under which your server is accessible from the internet (i.e. the URL you set up in the webhooks console minus the "`/new-call`" portion).
 
 ## Execution
 Navigate to the project's root directory.
@@ -205,8 +208,7 @@ private static String composeXmlResponse() {
 }
 ```
 
-The `composeXmlResponse` function composes the XML response with the `onAnswer` and `onHangup` attributes with the destination URLs for the corresponding webhooks. 
-The `BASE_URL` constant is defined at the very top of the class. It is the URL under which your server is accessible from the internet (i.e. the URL you set up in the webhooks console minus the "`/new-call`" portion).
+The `composeXmlResponse` function composes the XML response with the `onAnswer` and `onHangup` attributes with the destination URLs for the corresponding webhooks.
 
 ## Common Issues
 

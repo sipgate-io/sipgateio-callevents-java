@@ -11,13 +11,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class App {
 
-	private static final String BASE_URL = "[YOUR_SERVERS_ADDRESS]";
+	private static String BASE_URL;
 
 	public static void main(String[] args) throws IOException {
-		SimpleHttpServer simpleHttpServer = new SimpleHttpServer(8080);
+
+		Dotenv dotenv = Dotenv.load();
+		BASE_URL = dotenv.get("WEBHOOK_URL");
+
+		SimpleHttpServer simpleHttpServer = new SimpleHttpServer(Integer.valueOf(dotenv.get("WEBHOOK_PORT")));
 		simpleHttpServer.addPostHandler("/new-call", App::handleNewCall);
 		simpleHttpServer.addPostHandler("/on-answer", App::handleOnAnswer);
 		simpleHttpServer.addPostHandler("/on-hangup", App::handleOnHangup);
